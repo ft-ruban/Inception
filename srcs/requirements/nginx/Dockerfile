@@ -14,14 +14,13 @@ apt install -y curl nginx vim openssl && \
 #apt install -y openssl && \
 apt clean && \
 rm -rf /var/lib/apt/lists/* && \
-mkdir -p /etc/nginx/ssl
+mkdir -p /etc/nginx/ssl && \
+openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key -subj "/C=FR/ST=ARA/L=Charboville/O=42/OU=42/CN=ldevoude.42.fr/UID=ldevoude" && \
+mkdir -p /var/run/nginx
 
-RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key -subj "/C=FR/ST=ARA/L=Charboville/O=42/OU=42/CN=ldevoude.42.fr/UID=ldevoude"
+COPY conf/nginx.conf /etc/nginx/nginx.conf
 
-
-RUN mkdir -p /var/run/nginx
-
-ENV USER=ldev
+ENV USER=ldevoude
 ENV shell=/bin/bash
 
 #MariaDB default port
@@ -34,7 +33,7 @@ EXPOSE 443
 
 #entry point = pour finir execute ce script
 # cmd = pour finir execute cette commande
-CMD ["nginx", "-g", "daemon off;"]
+#CMD ["nginx", "-g", "daemon off;"]
 
 #todebug?
 #CMD sleep infinity
