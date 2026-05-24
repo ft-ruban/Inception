@@ -1,12 +1,33 @@
+#it say it is obsolete?
 version: "3.7"
 
-services:
-  mariadb:
-    image: mariadb
-    restart: always
-    # environment:
-    #   MYSQL_ROOT_PASSWORD: secret
-    volumes:
-      - ./data:/var/lib/mysql
+# services:
+#   mariadb:
+#     image: mariadb
+#     restart: always
+#     # environment:
+#     #   MYSQL_ROOT_PASSWORD: secret
+#     volumes:
+#       - ./data:/var/lib/mysql
+#     ports:
+#       -3306:3306
+
+
+services: 
+  nginx:
+    container_name: NGINX
+    build:
+      context: .
+      dockerfile: requirements/nginx/Dockerfiletest
     ports:
-      -3306:3306
+      - 443:443
+    #here I need to find out what kind of healthcheck
+      #to do with nginx.
+    #hereI need to put the dependances
+    #think about what kind of restart we need
+    #volumes
+    #network
+
+  #same for wordpress
+
+  #same for mariadb

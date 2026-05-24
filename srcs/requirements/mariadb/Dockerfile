@@ -9,9 +9,10 @@ LABEL description="MariaDB Server"
 
 #combine with &&
 #rm folder that contain apt logs
-RUN apt-get -y update 
-RUN apt install -y bash
-RUN apt install -y mariadb-server
+RUN apt -y update
+RUN apt -y upgrade
+#check if right version
+RUN install -y mariadb-server-10.3 
 
 #MariaDB default port
 EXPOSE 3306
