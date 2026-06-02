@@ -12,16 +12,13 @@ LABEL description="MariaDB Server"
 RUN apt -y update
 RUN apt -y upgrade
 #check if right version
-RUN install -y mariadb-server-10.3 
-
+RUN apt -y install mariadb-server
+COPY tools/script_sql.sh /app/tools/script_sql.sh
+RUN chmod +x /app/tools/script_sql.sh
 #MariaDB default port
 EXPOSE 3306
 COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-RUN service mysql start;
-RUN mysql -e "CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;"
-RUN mysql -e "GRAND ALL PRIVILEGES ON \ `${SQL_DATABASE}\`.* TO \ `${SQL_USER}\`@'%' IDENTIFIED BY '${SQL_PASSWORD}';"
-RUN mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';"
 #run to check if container is healthy, if 0 healthcheck is a success, 1 it fails
 #mettre dans docker-compose?
 HEALTHCHECK --start-period=5m \
@@ -30,6 +27,8 @@ HEALTHCHECK --start-period=5m \
 #entry point = pour finir execute ce script
 # cmd = pour finir execute cette commande
 CMD ["mariadbd"]
+
+ENTRYPOINT ["/app/tools/script_sql.sh"]
 
 #todebug?
 #CMD sleep infinity

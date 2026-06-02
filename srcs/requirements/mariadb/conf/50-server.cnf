@@ -16,7 +16,8 @@
 						# This group is read both both by the client and the server
 						# use it for options that affect everything
 						#
-						[mysql]
+						
+						[mysqld]
 						port = 3306
 						bind_adresse =*
 						datadir=/var/lib/mysql
@@ -24,5 +25,5 @@
 						socket = /run/mysqld/mysqld.sock
 
 						# Import all .cnf files from configuration directory
-						!includedir /etc/mysql/conf.d/
-						!includedir /etc/mysql/mariadb.conf.d/
+						#!includedir /etc/mysql/conf.d/
+						#!includedir /etc/mysql/mariadb.conf.d/
