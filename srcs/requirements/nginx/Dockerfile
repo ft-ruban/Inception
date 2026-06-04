@@ -19,6 +19,7 @@ mkdir -p /var/run/nginx
 
 #COPY tools/index.html /usr/share/nginx/html/index.html
 COPY requirements/nginx/conf/nginx.conf /etc/nginx/nginx.conf
+# COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 
 # ENV USER=ldevoude
 # ENV shell=/bin/bash
