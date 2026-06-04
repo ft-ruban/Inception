@@ -13,11 +13,11 @@ RUN apt -y update
 RUN apt -y upgrade
 #check if right version
 RUN apt -y install mariadb-server
-COPY tools/script_sql.sh /app/tools/script_sql.sh
+COPY requirements/mariadb/tools/script_sql.sh /app/tools/script_sql.sh
 RUN chmod +x /app/tools/script_sql.sh
 #MariaDB default port
 EXPOSE 3306
-COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY requirements/mariadb/conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 #run to check if container is healthy, if 0 healthcheck is a success, 1 it fails
 #mettre dans docker-compose?

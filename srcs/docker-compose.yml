@@ -15,14 +15,14 @@ services:
     container_name: nginx
     build:
       context: .
-      dockerfile: requirements/nginx/Dockerfiletest
+      dockerfile: requirements/nginx/Dockerfile
     ports:
       - 443:443
     #here I need to find out what kind of healthcheck
       #to do with nginx.
-    depends_on:
-      wordpress:
-        condition: service_healthy
+    # depends_on:
+    #   wordpress:
+    #     condition: service_healthy
     healthcheck:
       #change localhost if necessary
       test: ["CMD", "curl", "-k", "https://localhost"]
@@ -30,8 +30,8 @@ services:
       timeout: 10s
       retries: 3
     #think about what kind of restart we need
-    volumes:
-      - wordpress_data:/var/www/html
+    # volumes:
+    #   - wordpress_data:/var/www/html
     #network
     restart: unless-stopped
     networks:
@@ -40,23 +40,23 @@ services:
 
   #same for wordpress
 
-  wordpress:
-    container_name: wordpress
-    build:
-      context: .
-      dockerfile: requirements/wordpress/Dockerfile
-    environment:
-      WORDPRESS_DB_HOST: mariadb
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress_password
-      WORDPRESS_DB_NAME: wordpress
-    depends_on:
-      mariadb:
-        condition: service_healthy
-    #healthcheck
-    restart: unless-stopped
-    networks:
-    - inception
+  # wordpress:
+  #   container_name: wordpress
+  #   build:
+  #     context: .
+  #     dockerfile: requirements/wordpress/Dockerfile
+  #   environment:
+  #     WORDPRESS_DB_HOST: mariadb
+  #     WORDPRESS_DB_USER: wordpress
+  #     WORDPRESS_DB_PASSWORD: wordpress_password
+  #     WORDPRESS_DB_NAME: wordpress
+  #   depends_on:
+  #     mariadb:
+  #       condition: service_healthy
+  #   #healthcheck
+  #   restart: unless-stopped
+  #   networks:
+  #   - inception
 
   mariadb:
     container_name: mariadb
@@ -67,8 +67,8 @@ services:
     #healthcheck?
 
     restart: unless-stopped
-    volumes:
-      - wordpress_data:/var/www/html
+    # volumes:
+    #   - wordpress_data:/var/www/html
     networks:
     - inception
     
