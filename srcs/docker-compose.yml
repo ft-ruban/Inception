@@ -9,6 +9,9 @@
 #     ports:
 #       -3306:3306
 
+volumes:
+  wordpress_data:
+  mariadb_data:
 
 services: 
   nginx:
@@ -25,7 +28,7 @@ services:
         condition: service_healthy
     healthcheck:
       #change localhost if necessary
-      test: ["CMD", "curl", "-k", "https://localhost"]
+      test: ["CMD", "curl", "-k", "https://ldevoude.42.fr"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -33,6 +36,9 @@ services:
     volumes:
       - wordpress_data:/var/www/html
     #network
+    # depends_on:
+    #   wordpress:
+    #   condition: service-started
     restart: unless-stopped
     networks:
     - inception
@@ -47,14 +53,28 @@ services:
       dockerfile: requirements/wordpress/Dockerfile
     environment:
       WORDPRESS_DB_HOST: mariadb
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress_password
-      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: ${SQL_USER}
+      WORDPRESS_DB_PASSWORD: ${SQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${SQL_DATABASE}
+      DOMAIN_NAME: ${DOMAIN_NAME}
+      WP_TITLE: ${WP_TITLE}
+      WP_ADMIN: ${WP_ADMIN}
+      WP_ADMIN_PASSWORD: ${WP_ADMIN_PASSWORD}
+      WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL}
+      WP_USER: ${WP_USER}
+      WP_USER_EMAIL: ${WP_USER_EMAIL}
+      WP_USER_PASSWORD: ${WP_USER_PASSWORD}
     depends_on:
       mariadb:
         condition: service_healthy
-    #healthcheck
+    healthcheck:
+      test: ["CMD","php-fpm8.2", "-t"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
     restart: unless-stopped
+    volumes:
+      - wordpress_data:/var/www/html
     networks:
     - inception
 
@@ -63,14 +83,23 @@ services:
     build:
       context: .
       dockerfile: requirements/mariadb/Dockerfile
-    #environment:?
-    #healthcheck?
+    environment:
+      SQL_DATABASE: ${SQL_DATABASE}
+      SQL_USER: ${SQL_USER}
+      SQL_PASSWORD: ${SQL_PASSWORD}
+      SQL_ROOT_PASSWORD: ${SQL_ROOT_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
     restart: unless-stopped
     volumes:
-      - wordpress_data:/var/www/html
+      - mariadb_data:/var/lib/mysql
     networks:
-    - inception
+      - inception
     
 
 networks:

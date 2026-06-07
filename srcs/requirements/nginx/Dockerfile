@@ -10,15 +10,15 @@ LABEL description="nginx docker"
 #rm folder that contain apt logs
 RUN apt-get -y update && \
 apt-get install -y bash && \
-apt install -y curl nginx vim openssl && \
-apt clean && \
+apt-get install -y curl nginx openssl && \
+apt-get clean && \
 rm -rf /var/lib/apt/lists/* && \
 mkdir -p /etc/nginx/ssl && \
 openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key -subj "/C=FR/ST=ARA/L=Charboville/O=42/OU=42/CN=ldevoude.42.fr/UID=ldevoude" && \
 mkdir -p /var/run/nginx
 
 #COPY tools/index.html /usr/share/nginx/html/index.html
-COPY requirements/nginx/conf/nginx.conf /etc/nginx/nginx.conf
+COPY requirements/nginx/conf/nginxtest.conf /etc/nginx/nginx.conf
 # COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 
 # ENV USER=ldevoude

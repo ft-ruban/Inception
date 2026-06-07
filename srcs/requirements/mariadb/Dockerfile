@@ -25,8 +25,8 @@ HEALTHCHECK --start-period=5m \
   CMD mariadb -e 'SELECT @@datadir;' || exit 1
 
 #entry point = pour finir execute ce script
-# cmd = pour finir execute cette commande
-CMD ["mariadbd"]
+# ca semble etre obsolete.
+#CMD ["mariadbd"]
 
 ENTRYPOINT ["/app/tools/script_sql.sh"]
 
