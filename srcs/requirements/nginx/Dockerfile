@@ -29,6 +29,7 @@ COPY requirements/nginx/conf/nginxtest.conf /etc/nginx/nginx.conf
 # EXPOSE 443:443
 # EXPOSE 80
 
+#overkill?
 RUN chmod 777 /var/www/html && \
     chown -R www-data:www-data /var/www/html
 

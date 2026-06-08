@@ -1,50 +1,31 @@
-# services:
-#   mariadb:
-#     image: mariadb
-#     restart: always
-#     # environment:
-#     #   MYSQL_ROOT_PASSWORD: secret
-#     volumes:
-#       - ./data:/var/lib/mysql
-#     ports:
-#       -3306:3306
-
 volumes:
   wordpress_data:
   mariadb_data:
 
-services: 
-  nginx:
-    container_name: nginx
+services:
+
+  mariadb:
+    container_name: mariadb
     build:
       context: .
-      dockerfile: requirements/nginx/Dockerfile
-    ports:
-      - 443:443
-    #here I need to find out what kind of healthcheck
-      #to do with nginx.
-    depends_on:
-      wordpress:
-        condition: service_healthy
+      dockerfile: requirements/mariadb/Dockerfile
+    environment:
+      SQL_DATABASE: ${SQL_DATABASE}
+      SQL_USER: ${SQL_USER}
+      SQL_PASSWORD: ${SQL_PASSWORD}
+      SQL_ROOT_PASSWORD: ${SQL_ROOT_PASSWORD}
     healthcheck:
-      #change localhost if necessary
-      test: ["CMD", "curl", "-k", "https://ldevoude.42.fr"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-    #think about what kind of restart we need
-    volumes:
-      - wordpress_data:/var/www/html
-    #network
-    # depends_on:
-    #   wordpress:
-    #   condition: service-started
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
     restart: unless-stopped
+    volumes:
+      - mariadb_data:/var/lib/mysql
     networks:
-    - inception
-
-
-  #same for wordpress
+      - inception
 
   wordpress:
     container_name: wordpress
@@ -78,33 +59,32 @@ services:
     networks:
     - inception
 
-  mariadb:
-    container_name: mariadb
+  nginx:
+    container_name: nginx
     build:
       context: .
-      dockerfile: requirements/mariadb/Dockerfile
-    environment:
-      SQL_DATABASE: ${SQL_DATABASE}
-      SQL_USER: ${SQL_USER}
-      SQL_PASSWORD: ${SQL_PASSWORD}
-      SQL_ROOT_PASSWORD: ${SQL_ROOT_PASSWORD}
+      dockerfile: requirements/nginx/Dockerfile
+    ports:
+      - 443:443
+    depends_on:
+      wordpress:
+        condition: service_healthy
     healthcheck:
-      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
-
-    restart: unless-stopped
+      test: ["CMD", "curl", "-k", "https://ldevoude.42.fr"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - wordpress_data:/var/www/html
+    restart: unless-stopped
     networks:
-      - inception
-    
+    - inception
 
+    
+#need to understand in detail how does that thing work
 networks:
-  inception: #name of the network
-    driver: bridge #?
+  inception:
+    driver: bridge
     ipam: #ip adress managment
       config:
-        - subnet: "172.20.0.0/16" #ip here between quotes
+        - subnet: "172.20.0.0/16"
