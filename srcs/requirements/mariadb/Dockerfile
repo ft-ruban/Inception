@@ -15,7 +15,7 @@ rm -rf /var/lib/apt/lists/* && \
 chmod +x /app/tools/script_sql.sh
 
 #MariaDB default port
-EXPOSE 3305
+EXPOSE 3306
 COPY requirements/mariadb/conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 ENTRYPOINT ["/app/tools/script_sql.sh"]
