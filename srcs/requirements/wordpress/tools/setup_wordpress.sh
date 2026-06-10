@@ -10,7 +10,7 @@ if [ ! -f wp-config.php ]; then
         --dbname=${WORDPRESS_DB_NAME} \
         --dbuser=${WORDPRESS_DB_USER} \
         --dbpass=${WORDPRESS_DB_PASSWORD} \
-        --dbhost=mariadb:3306 \
+        --dbhost=mariadb:3305 \
         --allow-root
     wp core install \
         --url=${DOMAIN_NAME} \
