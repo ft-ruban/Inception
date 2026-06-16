@@ -13,7 +13,7 @@ it had to be done on a virtual machine that is running Debian or Alpine. (I choo
 
 ## Instructions
 ### make
-To start and rebuild our services and make the folders required to store our data you are required to enter the following command at the root of the Git repository of the project (it prevent data loss when containers are restarted or removed as it esnure that local host directoryies exist)
+To start and rebuild our services and make the folders required to store our data you are required to enter the following command at the root of the Git repository of the project (it prevent data loss when containers are restarted or removed as it esnure that local host directories exist)
 ```
 make
 ```
