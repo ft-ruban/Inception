@@ -75,7 +75,7 @@ You can get on the created wordpress page by entering the following URL in your 
 https://ldevoude.42.fr
 ```
 
-you can also log as an admin if you have the right login and password by doing
+you can also log as an admin if you possess the right login and password by doing
 
 ```
 https://ldevoude.42.fr/wp-admin
