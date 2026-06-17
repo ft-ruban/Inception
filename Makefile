@@ -4,8 +4,8 @@ YML	:= srcs/docker-compose.yml
 all: $(NAME)
 
 $(NAME):
-	mkdir -p ~/data/wordpress
-	mkdir -p ~/data/mariadb
+	mkdir -p /home/ldevoude/data/wordpress
+	mkdir -p /home/ldevoude/data/mariadb
 	docker compose -f $(YML) up --build -d
 
 down:
@@ -27,9 +27,9 @@ prune:
 	docker system prune --all --volumes
 
 volume:
-	sudo rm -rf ~/data/wordpress
-	sudo rm -rf ~/data/mariadb
-	sudo rm -rf ~/data/
+	sudo rm -rf /home/ldevoude/data/wordpress/
+	sudo rm -rf /home/ldevoude/data/mariadb/
+	sudo rm -rf /home/ldevoude/data/
 
 logs: 
 	docker compose -f $(YML) logs

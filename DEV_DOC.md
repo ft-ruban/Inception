@@ -77,6 +77,10 @@ make re
 ### identify where the project data is stored and how it persists.
 
 ```
-~/data/
+/home/ldevoude/data/wordpress
 ```
-W.I.P
+```
+/home/ldevoude/data/mariadb
+```
+
+In the docker-compose.yml we redirect the data here thanks to Named volumes. It persist because it is created on the host machine and as long thoses folder are not cleaned then the data shall persist.

@@ -153,7 +153,5 @@ Host network remove network isolation entirely, it use host IP address and inter
 ### Docker Volumes vs bind Mounts
 
 Docker volumes and bind mounts differ when it come to management portability and performance.
-
 Volumes are managed by docker stored in a dedicated directory.
-
 bind mounts map a specific host path into our container, it rely on host's exact directory structure offering real-time sync for code editing but introduce path dependencies.

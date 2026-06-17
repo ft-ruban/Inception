@@ -1,7 +1,16 @@
 volumes:
   wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/ldevoude/data/wordpress
   mariadb_data:
-
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/ldevoude/data/mariadb
 services:
 
   mariadb:
