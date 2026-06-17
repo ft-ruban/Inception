@@ -29,7 +29,6 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
-
     restart: unless-stopped
     volumes:
       - mariadb_data:/var/lib/mysql
@@ -90,10 +89,9 @@ services:
     - inception
 
     
-#need to understand in detail how does that thing work
 networks:
   inception:
     driver: bridge
-    ipam: #ip adress managment
+    ipam:
       config:
         - subnet: "172.20.0.0/16"

@@ -14,7 +14,6 @@ mkdir -p /var/run/nginx
 
 COPY requirements/nginx/conf/nginx.conf /etc/nginx/nginx.conf
 
-#overkill?
 RUN chmod 755 /var/www/html && \
     chown -R www-data:www-data /var/www/html
 

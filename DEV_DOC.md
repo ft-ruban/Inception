@@ -1,20 +1,20 @@
-Developer documentation
+## Developer documentation
 
 ### set up the environment from scratch (prerequisites, config files, secrets).
 
 make a .env file that shall include the following:
-- DOMAIN_NAME=<your desired domain name>
-- SQL_DATABASE=<desired name for mariadb database>
-- SQL_USER=<desired name for mariadb username>
-- SQL_PASSWORD=<desired name for mariadb password>
-- SQL_ROOT_PASSWORD=<desired root password for mariadb docker>
-- WP_TITLE=<desired wordpress title>
-- WP_ADMIN=<Username of your Wordpress admin>
-- WP_ADMIN_PASSWORD=<Password of your Wordpress admin>
-- WP_ADMIN_EMAIL=<Email of your Wordpress admin>
-- WP_USER=<Username of your non admin user>
-- WP_USER_EMAIL=<Mail of your regular User>
-- WP_USER_PASSWORD=<Password of your regular user>
+- DOMAIN_NAME=\<your desired domain name>
+- SQL_DATABASE=\<desired name for mariadb database>
+- SQL_USER=\<desired name for mariadb username>
+- SQL_PASSWORD=\<desired name for mariadb password>
+- SQL_ROOT_PASSWORD=\<desired root password for mariadb docker>
+- WP_TITLE=\<desired wordpress title>
+- WP_ADMIN=\<Username of your Wordpress admin>
+- WP_ADMIN_PASSWORD=\<Password of your Wordpress admin>
+- WP_ADMIN_EMAIL=\<Email of your Wordpress admin>
+- WP_USER=\<Username of your non admin user>
+- WP_USER_EMAIL=\<Mail of your regular User>
+- WP_USER_PASSWORD=\<Password of your regular user>
 
 ### build and launch the project using the Makefile and Docker compose.
 To start and rebuild our services and make the folders required to store our data you are required to enter the following command at the root of the Git repository of the project (it prevent data loss when containers are restarted or removed as it esnure that local host directories exist)
